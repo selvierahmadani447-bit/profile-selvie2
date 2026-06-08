@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Selvie Digital Portfolio</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#ececec;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:15px;
+}
+
+.chat-container{
+width:100%;
+max-width:850px;
+height:90vh;
+background:white;
+border-radius:25px;
+overflow:hidden;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
+display:flex;
+flex-direction:column;
+}
+
+.header{
+background:linear-gradient(135deg,#7a7a7a,#a9a9a9);
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.header h1{
+font-size:30px;
+margin-bottom:5px;
+}
+
+.header p{
+font-size:14px;
+opacity:.95;
+}
+
+.chat-box{
+flex:1;
+padding:20px;
+overflow-y:auto;
+background:#f5f5f5;
+}
+
+.message{
+display:flex;
+align-items:flex-end;
+margin-bottom:15px;
+}
+
+.bot{
+justify-content:flex-start;
+}
+
+.user{
+justify-content:flex-end;
+}
+
+.avatar{
+font-size:28px;
+margin:0 8px;
+}
+
+.bubble{
+padding:12px 15px;
+border-radius:18px;
+max-width:75%;
+line-height:1.6;
+white-space:pre-line;
+}
+
+.bot .bubble{
+background:#e0e0e0;
+border-bottom-left-radius:5px;
+}
+
+.user .bubble{
+background:white;
+border:1px solid #d0d0d0;
+border-bottom-right-radius:5px;
+}
+
+.input-area{
+display:flex;
+padding:15px;
+background:white;
+border-top:1px solid #ddd;
+}
+
+input{
+flex:1;
+padding:12px;
+border-radius:12px;
+border:1px solid #ccc;
+outline:none;
+font-size:15px;
+}
+
+button{
+margin-left:10px;
+padding:12px 20px;
+border:none;
+border-radius:12px;
+background:#7a7a7a;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#666;
+}
+
+@media(max-width:600px){
+
+.header h1{
+font-size:24px;
+}
+
+.bubble{
+max-width:90%;
+font-size:14px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="chat-container">
+
+<div class="header">
+<h1>🌸 Ask About Selvie! 🌸</h1>
+<p>Selvie Digital Portfolio</p>
+</div>
+
+<div class="chat-box" id="chatBox"></div>
+
+<div class="input-area">
+<input
+type="text"
+id="userInput"
+placeholder="Tanyakan sesuatu tentang Selvie..."
+onkeypress="if(event.key==='Enter') sendMessage()">
+
+<button onclick="sendMessage()">Kirim</button>
+</div>
+
+</div>
+
+<script>
+
+function addMessage(text,sender){
+
+const chatBox=document.getElementById("chatBox");
+
+const msg=document.createElement("div");
+msg.classList.add("message",sender);
+
+if(sender==="bot"){
+msg.innerHTML=`
+<div class="avatar">🤖</div>
+<div class="bubble">${text}</div>
+`;
+}else{
+msg.innerHTML=`
+<div class="bubble">${text}</div>
+<div class="avatar">🧒</div>
+`;
+}
+
+chatBox.appendChild(msg);
+chatBox.scrollTop=chatBox.scrollHeight;
+}
+
+addMessage(
+`Halo! 👋
+
+Aku adalah chatbot portofolio Selvie Rahmadani Putri.
+
+Aku bisa membantu menjelaskan:
+
+🌸 Profil Selvie
+🏫 Riwayat Pendidikan
+🏆 Prestasi
+🤝 Organisasi
+🎨 Keterampilan
+🖌️ Karya dan Proyek
+✨ Cita-cita
+
+Coba tanyakan:
+• Siapa Selvie?
+• Profil Selvie
+• Pendidikan Selvie
+• Prestasi Selvie
+• Organisasi Selvie
+• Skill Selvie
+• Karya Selvie
+• Cita-cita Selvie`,
+"bot"
+);
+
+function sendMessage(){
+
+let input=document.getElementById("userInput");
+let pesan=input.value.trim();
+
+if(pesan==="") return;
+
+addMessage(pesan,"user");
+
+let text=pesan.toLowerCase();
+let reply="Maaf, aku belum memahami pertanyaan tersebut. 😊\n\nCoba tanyakan tentang profil, pendidikan, prestasi, organisasi, skill, karya, atau cita-cita Selvie.";
+
+if(
+text.includes("siapa selvie") ||
+text.includes("siapa kamu") ||
+text.includes("nama lengkap") ||
+text.includes("nama")
+){
+
+reply=
+`🙋‍♀️ Selvie Rahmadani Putri adalah seorang siswi kelas XI yang lahir di Surabaya pada tanggal 18 September 2008.
+
+Selvie memiliki minat yang besar dalam bidang seni digital, ilustrasi, dan desain. Ia senang mengembangkan kreativitas melalui berbagai karya visual dan terus belajar untuk meningkatkan kemampuan yang dimilikinya.`;
+
+}
+
+else if(
+text.includes("profil") ||
+text.includes("tentang selvie") ||
+text.includes("tentang kamu")
+){
+
+reply=
+`🌸 Profil Singkat Selvie
+
+Selvie Rahmadani Putri merupakan siswi kelas XI yang memiliki minat besar pada bidang seni digital, ilustrasi, dan desain.
+
+Ia gemar membuat karya visual kreatif dan terus mengembangkan keterampilannya melalui berbagai latihan serta proyek desain digital.`;
+
+}
+
+else if(
+text.includes("pendidikan") ||
+text.includes("riwayat pendidikan") ||
+text.includes("sekolah")
+){
+
+reply=
+`🏫 Riwayat Pendidikan Selvie
+
+1. SDN Kupang Krajan 1
+
+2. SMPN 56 Surabaya
+
+3. Saat ini sedang menempuh pendidikan di kelas XI.
+
+Melalui perjalanan pendidikannya, Selvie aktif mengikuti berbagai kegiatan yang membantu mengembangkan kemampuan akademik maupun non-akademiknya.`;
+
+}
+
+else if(
+text.includes("prestasi") ||
+text.includes("lomba") ||
+text.includes("penghargaan")
+){
+
+reply=
+`🏆 Prestasi Selvie
+
+• Finalis lomba mendongeng saat SD yang diselenggarakan oleh Taman Baca Masyarakat (TBM).
+
+• Finalis Olimpiade Kedokteran Islam yang diselenggarakan oleh IMSCO dan Universitas Islam Malang.
+
+Prestasi tersebut menjadi pengalaman berharga yang membantu meningkatkan rasa percaya diri serta kemampuan Selvie dalam menghadapi berbagai tantangan.`;
+
+}
+
+else if(
+text.includes("organisasi") ||
+text.includes("osis") ||
+text.includes("karang taruna")
+){
+
+reply=
+`🤝 Organisasi yang Pernah Diikuti
+
+• Organisasi Siswa Intra Sekolah (OSIS)
+
+• Karang Taruna
+
+Melalui kegiatan organisasi, Selvie belajar bekerja sama, berkomunikasi, dan berkontribusi dalam berbagai kegiatan sosial maupun sekolah.`;
+
+}
+
+else if(
+text.includes("skill") ||
+text.includes("keterampilan") ||
+text.includes("kemampuan")
+){
+
+reply=
+`🎨 Keterampilan Selvie
+
+• Gambar Digital
+
+• Desain Digital
+
+• Editing Video
+
+• Ilustrasi Karakter
+
+Keterampilan tersebut terus dikembangkan melalui latihan rutin dan pembuatan berbagai proyek kreatif yang mendukung perkembangan kemampuan desain digital.`;
+
+}
+
+else if(
+text.includes("karya") ||
+text.includes("proyek") ||
+text.includes("portfolio")
+){
+
+reply=
+`🖌️ Karya dan Proyek
+
+Selvie memiliki pengalaman membuat berbagai karya seni digital sebagai bagian dari pengembangan keterampilan kreatifnya.
+
+Beberapa karya yang pernah dibuat antara lain:
+
+• Ilustrasi Karakter
+
+• Desain Poster
+
+• Karya Seni Digital
+
+• Proyek Kreatif Visual
+
+Melalui karya-karya tersebut, Selvie terus belajar meningkatkan kreativitas dan kemampuan desainnya.`;
+
+}
+
+else if(
+text.includes("cita") ||
+text.includes("impian") ||
+text.includes("masa depan")
+){
+
+reply=
+`✨ Cita-cita dan Rencana Masa Depan
+
+Selvie memiliki cita-cita untuk bekerja di bidang yang berhubungan dengan seni dan desain digital.
+
+Ia berharap dapat mengembangkan hobinya menjadi profesi yang menghasilkan serta terus menciptakan karya-karya kreatif yang bermanfaat bagi banyak orang.`;
+
+}
+
+addMessage(reply,"bot");
+
+input.value="";
+}
+
+</script>
+
+</body>
+</html>
